@@ -1,4 +1,11 @@
-node_modules
-npm-debug.log
-.git
+# Shadow Audit
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
 .env
+.git/
+data/audits/*
+!data/audits/.gitkeep
+inputs/
+reports/

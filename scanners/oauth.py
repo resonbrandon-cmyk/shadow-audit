@@ -1,18 +1,21 @@
 import json
 from pathlib import Path
-from .base import Scanner, Finding
-
-RISKY = ('admin', 'drive', 'gmail.send', 'cloud-platform', 'full_access')
-
+import yaml
+from .base import Finding, Scanner
 class OAuthScanner(Scanner):
-    name = 'oauth'
-    def scan(self, source: Path | str) -> list[Finding]:
-        records = json.loads(Path(source).read_text())
-        if isinstance(records, dict): records = records.get('grants', records.get('items', []))
-        findings = []
-        for grant in records:
-            scopes = ' '.join(grant.get('scopes', [])) if isinstance(grant.get('scopes', []), list) else str(grant.get('scopes', ''))
-            risky = [token for token in RISKY if token in scopes.lower()]
-            if risky:
-                findings.append(Finding('High', 'Risky OAuth grant', 'An application has one or more broad or sensitive OAuth scopes.', {'app': grant.get('app') or grant.get('application'), 'user': grant.get('user'), 'scopes': scopes, 'matched': risky}, 'Review business need, remove unused scopes, and revoke unapproved grants.'))
-        return findings
+    name="oauth"
+    def __init__(self, scopes_file="data/risky_oauth_scopes.yaml"):
+        self.risky=set(yaml.safe_load(Path(scopes_file).read_text(encoding="utf-8")))
+    def scan(self, input_path: Path) -> list[Finding]:
+        if input_path.suffix.lower() not in {".json"}:
+            return []
+        try:
+            data=json.loads(input_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return []
+        grants=data if isinstance(data,list) else data.get("grants",[]); out=[]
+        for grant in grants:
+            scopes=set(grant.get("scopes",[])); risky=sorted(scopes & self.risky)
+            if risky or any("admin" in s.lower() or "directory" in s.lower() for s in scopes):
+                out.append(Finding("Risky OAuth grant", "High", "An application has sensitive or administrative OAuth permissions.", {"app":grant.get("app") or grant.get("client_id"),"scopes":sorted(scopes),"risky_scopes":risky}, "Validate the app owner, reduce scopes, and revoke unused grants."))
+        return out

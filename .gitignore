@@ -1,7 +1,26 @@
-node_modules/
-__pycache__/
-.pytest_cache/
+# Environment and secrets
 .env
-uploads/
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Local application data
+data/*.db
+data/audits/*
+!data/audits/.gitkeep
+inputs/*
+
+# Generated reports and uploads
 reports/
-*.pyc
+*.pdf
+*.sqlite
+*.sqlite3
+
+# Docker and tooling
+.docker/

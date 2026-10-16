@@ -1,1 +1,1 @@
-[{"app":"Unapproved AI Assistant","user":"analyst@example.test","scopes":["drive.readonly","gmail.send"]}]
+{"grants":[{"app":"Unapproved AI Assistant","client_id":"client-1","scopes":["https://www.googleapis.com/auth/drive","https://www.googleapis.com/auth/gmail.send"]},{"app":"Calendar","scopes":["calendar.readonly"]}]}
