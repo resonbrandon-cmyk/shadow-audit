@@ -1,6 +1,6 @@
 from pathlib import Path
 from datetime import datetime
-from .base import Finding
+from scanners.base import Finding
 
 def generate_markdown(client: str, findings: list[Finding], output: Path) -> Path:
     score = sum({'Critical': 25, 'High': 15, 'Medium': 8, 'Low': 3}.get(item.severity, 1) for item in findings)
