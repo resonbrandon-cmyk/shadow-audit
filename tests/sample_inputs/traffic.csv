@@ -1,0 +1,2 @@
+client,domain,source_ip,timestamp,requests,bytes
+Acme SRL,api.openai.com,10.0.0.5,2026-01-01T10:00:00Z,4,12000
