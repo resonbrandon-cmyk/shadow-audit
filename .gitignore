@@ -1,1 +1,26 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
 
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Local application data
+data/*.db
+data/audits/*
+!data/audits/.gitkeep
+inputs/*
+
+# Generated reports and uploads
+reports/
+*.pdf
+*.sqlite
+*.sqlite3
+
+# Docker and tooling
+.docker/

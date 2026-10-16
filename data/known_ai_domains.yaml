@@ -1,0 +1,11 @@
+ai_domains:
+  - openai.com
+  - api.openai.com
+  - anthropic.com
+  - api.anthropic.com
+  - generativelanguage.googleapis.com
+  - gemini.google.com
+  - api.mistral.ai
+  - api.cohere.ai
+  - perplexity.ai
+  - huggingface.co

@@ -1,0 +1,6 @@
+- https://www.googleapis.com/auth/drive
+- https://www.googleapis.com/auth/admin.directory.user
+- https://www.googleapis.com/auth/admin.directory.domain
+- https://graph.microsoft.com/.default
+- Mail.Send
+- Directory.ReadWrite.All
